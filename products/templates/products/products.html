@@ -89,18 +89,18 @@
                         <li class="page-item {% if not products.has_previous %} disabled {% endif %}">
                             <a class="page-link"
                                href="{% if products.has_previous %}
-                                {% url 'products:paginator' products.previous_page_number %}
+                                {% url 'products:paginator' page_number=products.previous_page_number category_id=category_id %}
                             {% else %} # {% endif %} "
                                tabindex="-1" aria-disabled="true">Previous</a>
                         </li>
                         {% for page in products.paginator.page_range %}
                             <li class="page-item"><a class="page-link"
-                                                     href="{% url 'products:paginator' page %}">{{ page }}</a></li>
+                                                     href="{% url 'products:paginator' page_number=page category_id=category_id %}">{{ page }}</a></li>
                         {% endfor %}
                         <li class="page-item {% if not products.has_next %} disabled {% endif %}">
                             <a class="page-link"
                                href="{% if products.has_next %}
-                            	{% url 'products:paginator' products.next_page_number %}
+                            	{% url 'products:paginator' page_number=products.next_page_number category_id=category_id %}
                             {% else %} # {% endif %} ">Next</a>
                         </li>
                     </ul>

@@ -14,7 +14,7 @@ def index(request: HttpRequest):
     return render(request, 'products/index.html', context)
 
 
-def products(request, category_id: int = None, page_number=1):
+def products(request, category_id: int = 0, page_number=1):
     products_list = Product.objects.filter(category_id=category_id) if category_id else Product.objects.all()
 
     paginator = Paginator(products_list, per_page=3)
@@ -22,7 +22,8 @@ def products(request, category_id: int = None, page_number=1):
 
     context = {
         'products': products_paginator,
-        'categories': Category.objects.all()
+        'categories': Category.objects.all(),
+        'category_id': category_id
     }
     return render(request, 'products/products.html', context)
 
