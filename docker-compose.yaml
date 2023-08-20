@@ -1,0 +1,24 @@
+version: '3.0'
+services:
+  postgres-service:
+    container_name: 'postgres-service'
+    image: postgres:14.7-alpine
+    restart: always
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 1s
+      timeout: 1s
+      retries: 10
+    ports:
+      - ${DB_PORT}:5432
+    networks:
+      - custom
+networks:
+  custom:
+    driver: bridge
