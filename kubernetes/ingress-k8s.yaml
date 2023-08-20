@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-hosts
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - store.berezzin.by
+      secretName: app-tls
+  rules:
+    - host: store.berezzin.by
+      http:
+        paths:
+          - backend:
+              service:
+                name: store-app-service
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
